@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prompt-shield"
+version = "0.1.0"
+description = "Catch brittle prompts before production does — brittleness score and CI gate for LLM prompts under paraphrase"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+keywords = ["llm", "prompts", "testing", "brittleness", "robustness", "ai", "nlp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "sentence-transformers>=2.7.0",
+    "click>=8.1.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+t5 = [
+    "transformers>=4.40.0",
+    "torch>=2.0.0",
+]
+llm = [
+    "anthropic>=0.25.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio",
+    "ruff",
+    "mypy",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Rowusuduah/prompt-shield"
+"Bug Tracker" = "https://github.com/Rowusuduah/prompt-shield/issues"
+
+[project.scripts]
+shield = "prompt_shield.cli:cli"
+
+[project.entry-points."pytest11"]
+shield = "prompt_shield.pytest_plugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["prompt_shield"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
